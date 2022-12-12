@@ -1,0 +1,1 @@
+window.__NUXT__=(function(a){return {staticAssetsBase:"\u002Fnuxt-notion\u002F_nuxt\u002Fstatic\u002F1670844834",layout:"default",error:a,serverRendered:true,routePath:"\u002F",config:{notionPageId:"7b5afc64e8484277aaddd95c04131065",_app:{basePath:"\u002Fnuxt-notion\u002F",assetsPath:"\u002Fnuxt-notion\u002F_nuxt\u002F",cdnURL:a}}}}(null));
