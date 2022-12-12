@@ -8,8 +8,8 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "predeploy": "nuxt generate && npm run build",
-    "deploy": "gh-pages -d build"
+    "predeploy": "nuxt generate && nuxt build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@nuxt/content": "^2.2.2",
