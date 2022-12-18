@@ -1,9 +1,10 @@
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
-  router: {
-    base: '/nuxt-notion/'
-  },
+  ssr: false,
+  // router: {
+  //   // base: '/nuxt-notion/'
+  // },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Dan\'s blog',
@@ -17,7 +18,9 @@ export default {
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'dns-prefetch', href: '//fonts.googleapis.com'},
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Lora%3A400%2C400italic%2C700%2C700italic%7CMontserrat%3A400%2C700%7CMaven+Pro%3A400%2C700&ver=6.1.1' },
+      { rel: 'icon', type: 'image/x-icon', href: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>' }
     ]
   },
   publicRuntimeConfig: {
@@ -26,6 +29,7 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '~/assets/css/globals.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -40,13 +44,14 @@ export default {
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
     'vue-notion/nuxt',
-    '@nuxt/content'
+    '@nuxt/postcss8'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     'vue-notion/nuxt',
-    '@nuxt/content'
+    '@nuxt/content',
+    '@nuxt/postcss8'
   ],
   // generate: {
   //   async routes () {
@@ -57,6 +62,13 @@ export default {
   // },
   content: {
     // https://content.nuxtjs.org/api/configuration
+    watch: {
+      ws: {
+        port: 4000,
+        hostname: 'localhost',
+        showURL: false
+      }
+    },
     dir: 'content',
     fullTextSearchFields: ['title', 'description', 'slug'],
     // editor: '~/path/to/editor/component.vue',
@@ -64,7 +76,6 @@ export default {
     liveEdit: true,
     useCache: false,
     markdown: {
-      remarkPlugins: ['remark-emoji'],
       prism: {
         theme: 'prism-themes/themes/prism-atom-dark.css'
       }
@@ -87,5 +98,11 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    postcss: {
+      plugins: {
+        tailwindcss: {},
+        autoprefixer: {},
+      },
+    },
   }
 }
