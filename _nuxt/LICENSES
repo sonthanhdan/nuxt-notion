@@ -1,3 +1,6 @@
+/*! For license information please see editor.js.LICENSE.txt */
+
+
 /*!
  * vue-client-only v0.0.0-semantic-release
  * (c) 2021-present egoist <0x142857@gmail.com>
@@ -18,9 +21,6 @@
  * @namespace
  * @public
  */
-
-
-/*! For license information please see editor.js.LICENSE.txt */
 
 
 /*!
