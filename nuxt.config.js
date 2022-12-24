@@ -3,9 +3,9 @@ export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
   ssr: false,
-  // router: {
-  //   // base: '/nuxt-notion/'
-  // },
+  router: {
+    base: '/nuxt-notion/'
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Dan\'s blog',
@@ -54,13 +54,13 @@ export default {
     '@nuxt/content',
     '@nuxt/postcss8'
   ],
-  // generate: {
-  //   async routes () {
-  //     const { $content } = require('@nuxt/content')
-  //     const files = await $content({ deep: true }).only(['path']).fetch()
-  //     return files.map(file => file.path === '/index' ? '/' : file.path)
-  //   }
-  // },
+  generate: {
+    async routes () {
+      const { $content } = require('@nuxt/content')
+      const files = await $content({ deep: true }).only(['path']).fetch()
+      return files.map(file => file.path === '/index' ? '/' : file.path)
+    }
+  },
   content: {
     // https://content.nuxtjs.org/api/configuration
     watch: {
