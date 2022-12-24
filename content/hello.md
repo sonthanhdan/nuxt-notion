@@ -44,5 +44,3 @@ Thus, he tried to get his upper body out of the bed first and turned his head ca
 3. The Trial
 4. America	
 5. The Diaries Of Franz Kafka
-
-***

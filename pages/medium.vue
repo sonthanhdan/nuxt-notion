@@ -1,6 +1,6 @@
 <template>
-  <main class="font-poppins grid grid-cols-7">
-    <div class="xl:flex justify-end h-full hidden relative">
+  <div class="font-poppins grid grid-cols-7">
+    <div class="left-side xl:flex justify-end h-full hidden relative">
       <div
         class="fixed justify-between h-full px-6 py-12 col-span-1 flex flex-col"
       >
@@ -226,49 +226,9 @@
         </div>
       </div>
     </div>
-    <div class="border-gray-200 w-full h-full col-span-7 xl:col-span-4">
+    <div class="main-container border-gray-200 w-full h-full col-span-7 xl:col-span-4">
       <!-- border-x-[1px] -->
-      <div class="block">
-        <div class="bg-white fixed inset-x-0 top-0 z-10">
-          <header
-            class="flex justify-between font-poppins items-center p-3 sm:p-5 wrapper"
-          >
-            <div></div>
-            <div class="flex items-center space-x-0 sm:space-x-5">
-              <div class="hidden md:inline-flex items-center space-x-5">
-                <nuxt-link to="/">
-                <span
-                  role="img"
-                  aria-label="💻"
-                  class="notion-emoji notion-page-icon-offset notion-page-icon-cover"
-                  >💻</span
-                >
-                <span
-                  class="notion-emoji font-extrabold text-xl font-serif brand-link"
-                  >Dan's Blog</span
-                >
-                </nuxt-link>
-                <!-- <h3 class="cursor-pointer">About</h3>
-              <h3 class="cursor-pointer">Contact</h3> -->
-                <!-- <h3 class="bg-green-600 cursor-pointer rounded-full hover:bg-green-700 duration-500  px-4 py-2 text-white">Follow</h3> -->
-              </div>
-            </div>
-            <div class="flex items-center space-x-5 text-green-600">
-              <div class="flex justify-center items-center space-x-5">
-                <!-- <h3 class="border px-4 py-1 cursor-pointer hover:bg-green-600 hover:text-white duration-200 rounded-full border-green-600">Get Started</h3> -->
-              </div>
-            </div>
-          </header>
-          <div class="text-center">
-            <div
-              class="fixed inset-0 backdrop-blur-0 pointer-events-none duration-500 bg-opacity-0 ease-in-out transition-all overflow-y-hidden"
-            ></div>
-            <div
-              class="scale-0 ease-in-out duration-500 h-[600px] w-[500px] rounded-lg fixed -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 bg-white shadow-xl"
-            ></div>
-          </div>
-        </div>
-      </div>
+      
       <div
         class="w-full z-50 block sm:hidden px-[30px] py-[20px] fixed bg-gray-100 shadow-md bottom-0 top-20"
       >
@@ -332,41 +292,42 @@
           </div>
         </div>
       </div>
+      
       <div
         class="wrapper z-0 mt-24 flex flex-col justify-center max-w-[800px] xl:px-6"
       >
+      <nav class="text-sm">
+        <ol class="list-reset flex">
+          <li><a href="#" class="text-blue-600 hover:text-blue-700">Home</a></li>
+          <li><span class="text-gray-500 mx-2">/</span></li>
+          <li>
+            <a href="#" class="text-blue-600 hover:text-blue-700">Library</a>
+          </li>
+          <li><span class="text-gray-500 mx-2">/</span></li>
+          <li class="text-gray-500">Data</li>
+        </ol>
+      </nav>
         <div
           class="md:flex space-y-8 md:space-y-0 justify-between items-center space-x-4 py-10 font-extralight text-sm"
         >
+          
           <div class="flex">
             <div>
               <img
                 class="h-12 w-12 object-cover rounded-full"
-                src="https://cdn.sanity.io/images/gyc4tcpa/production/ad62f7a815fd2aebade9b399a124eefd80ce0e67-1000x1000.png"
+                src="https://icotar.com/initials/Dan%20Son.svg?bg=2d00ff"
                 alt=""
               />
             </div>
             <div class="pl-4">
               <p class="font-medium text-base">
-                <span class="text-gray-900"> Dan Son</span>
+                <span class="text-gray-900">Dan Son</span>
               </p>
-              <div class="flex items-center">
-                <p class="text-gray-600">Thu Apr 21 2022</p>
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 14 16"
-                  class="text-gray-500 ml-2 h-4"
-                  height="1em"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z"
-                  ></path>
-                </svg>
+           
+              <div class="text-muted">
+                <time datetime="2022-12-20">December 24, 2022</time
+                >&nbsp;·
+                <span class="italic">7 min read</span>
               </div>
             </div>
           </div>
@@ -1001,6 +962,7 @@ serverComponents: true,
               becoming one.
             </p>
           </div>
+          
         </div>
         <div class="">
           <div
@@ -1338,7 +1300,7 @@ serverComponents: true,
             </div>
           </div>
         </div>
-        <div id="hide" class="flex mb-36 mt-16 justify-between items-center">
+        <div id="hide" class="flex mb-3 mt-10 justify-between items-center">
           <div class="flex space-x-8 items-center">
             <div class="flex space-x-2">
               <div
@@ -1416,6 +1378,18 @@ serverComponents: true,
               </div>
             </div>
           </div>
+        </div>
+        <div class="w-full wrapper mb-10">
+
+<span class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">Default</span>
+<span class="bg-gray-100 text-gray-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Dark</span>
+<span class="bg-red-100 text-red-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-red-200 dark:text-red-900">Red</span>
+<span class="bg-green-100 text-green-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-green-200 dark:text-green-900">Green</span>
+<span class="bg-yellow-100 text-yellow-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-200 dark:text-yellow-900">Yellow</span>
+<span class="bg-indigo-100 text-indigo-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-indigo-200 dark:text-indigo-900">Indigo</span>
+<span class="bg-purple-100 text-purple-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-purple-200 dark:text-purple-900">Purple</span>
+<span class="bg-pink-100 text-pink-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-pink-200 dark:text-pink-900">Pink</span>
+
         </div>
         <div
           class="w-full wrapper p-10 border-t-[4px] border-green-600 bg-gray-100"
@@ -1859,7 +1833,7 @@ serverComponents: true,
     </div>
     <div class="h-[110vh] hidescrollbar relative hidden xl:flex">
       <div
-        class="fixed bottom-0 top-20 overflow-y-scroll w-[380px] col-span-2 px-8 pb-16"
+        class="right-side fixed bottom-0 top-20 overflow-y-scroll w-[380px] col-span-2 px-8 pb-16"
       >
         <!-- <div class="space-x-8" >
         <button class="bg-gray-800 hover:bg-gray-900 duration-500 px-16 py-2 rounded-full text-white">Get started</button>
@@ -1894,7 +1868,7 @@ serverComponents: true,
           <div>
             <img
               class="h-20 w-20 object-cover rounded-full"
-              src="https://cdn.sanity.io/images/gyc4tcpa/production/ad62f7a815fd2aebade9b399a124eefd80ce0e67-1000x1000.png"
+              src="https://icotar.com/initials/Dan%20Son.svg?bg=2d00ff"
               alt=""
             />
             <h1 class="font-bold py-4 text-gray-900">Dan Son</h1>
@@ -2090,12 +2064,7 @@ serverComponents: true,
                   </div>
                 </div>
               </div>
-              <div class="text-xs mt-0 bottom-0">
-                <span
-                  class="cursor-pointer text-gray-500 hover:text-gray-900 duration-100 pr-4"
-                  >© 2022 Dan's Blog. Design with ❤️</span
-                >
-              </div>
+             
             </div>
           </div>
         </div>
@@ -2109,7 +2078,7 @@ serverComponents: true,
         class="scale-0 ease-in-out duration-500 h-[600px] w-[500px] rounded-lg fixed -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 bg-white shadow-xl"
       ></div>
     </div>
-  </main>
+  </div>
 </template>
 
 <script lang="ts">

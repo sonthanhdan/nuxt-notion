@@ -1,3 +1,4 @@
+
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
@@ -94,6 +95,28 @@ export default {
     csv: {},
     xml: {},
     extendParser: {}
+  },
+
+  hooks: {
+    'content:file:beforeParse': (file) => {
+      if (file.extension !== '.md') return
+      file.data = file.data.replace(/react/g, 'vue')
+    },
+    'content:file:beforeInsert': async (document, database) => {
+      if (document.extension === '.md') {
+        const { time } = require('reading-time')(document.text)
+        document.readingTime = time
+      }
+
+      if (document.extension === '.json' && document.body) {
+        const data = await database.markdown.toJSON(document.body)
+        Object.assign(document, data)
+      }
+
+    },
+    'content:options': (options) => {
+      console.log('Content options:', options)
+    }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

@@ -21,6 +21,9 @@ module.exports = {
           "40%": { transform: "translateX(0px)" },
         },
       },
+      colors: {
+        muted: '#74808b'
+      }
     },
   },
   plugins: [
