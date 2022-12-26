@@ -24,6 +24,9 @@
           <div class="flex justify-center items-center space-x-5">
             <ul class="flex items-center justify-center">
               <li class="relative group px-3 py-2">
+                <a href="/editor" class="hover:opacity-50 cursor-pointer">write</a>
+              </li>
+              <li class="relative group px-3 py-2">
                 <button class="hover:opacity-50 cursor-pointer">topics</button>
                 <div
                   class="absolute top-0 right-0 transition group-hover:translate-y-5 translate-y-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible duration-500 ease-in-out group-hover:transform z-50 min-w-[560px] transform"
@@ -187,9 +190,6 @@
                   </div>
                 </div>
               </li>
-              <!-- <li class="relative group px-3 py-2">
-                <a href="#" class="hover:opacity-50 cursor-pointer">login </a>
-              </li> -->
             </ul>
           </div>
         </div>
