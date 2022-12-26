@@ -27,7 +27,8 @@
       "@nuxt/types",
       "@nuxt/content",
       "@types/node",
-      "@editorjs/editorjs"
+      "@editorjs/editorjs",
+      "Index.d.ts",
     ]
   },
   "exclude": [

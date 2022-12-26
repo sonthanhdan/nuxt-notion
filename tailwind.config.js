@@ -12,6 +12,8 @@ module.exports = {
     extend: {
       fontFamily: {
         poppins: "Poppins",
+        "medium-quote": ["source-serif-pro", "Georgia", "Cambria", "Times New Roman", "Times", "serif"],
+        "medium-paragraph": ["source-serif-pro", "Georgia", "Cambria", "Times New Roman", "Times", "serif"],
       },
       keyframes: {
         wave: {

@@ -1,290 +1,277 @@
 <template>
-  <main>
-    <div id="editor"></div>
-    <button style="margin-left: 30%;" type="button" name="button" @click="save()">save</button>
-    <div class="editorx_body">
-      <pre>{{ value }}</pre>
+  <div class="mt-20">
+    <nav class="text-base max-w-4xl mx-auto relative">
+      <ol class="list-reset flex">
+        <li><a href="#" class="text-blue-600 hover:text-blue-700">Space</a></li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li>
+          <a href="#" class="text-blue-600 hover:text-blue-700">X</a>
+        </li>
+        <li><span class="text-gray-500 mx-2">/</span></li>
+        <li class="text-gray-500">me</li>
+      </ol>
+    </nav>
+    <div class="max-w-4xl mx-auto relative">
+      <button
+        type="button"
+        class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-0.5 mr-2 mb-2 mt-5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+      >
+        Add emoji
+      </button>
+      <button
+        type="button"
+        class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-0.5 mr-2 mb-2 mt-5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+      >
+        Add header image
+      </button>
+      <button
+        type="button"
+        class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-0.5 mr-2 mb-2 mt-5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+        @click="preview"
+      >
+        Preview
+      </button>
+      <button
+        type="button"
+        class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-0.5 mr-2 mb-2 mt-5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+        @click="save"
+      >
+        Save
+      </button>
     </div>
-    <h2>preview</h2>
-    <div v-html="parsedHTML"></div>
-  </main>
+    <div class="max-w-4xl mx-auto relative">
+      <textarea
+        class="h-9 w-full shadow-none m-auto text-3xl font-bold whitespace-pre-wrap box-border overflow-hidden border-none pt-1 resize-none border-transparent focus:outline-none"
+        placeholder="Give me a title"
+        rows="1"
+      ></textarea>
+    </div>
+    <div class="max-w-4xl mx-auto relative">
+      <div id="editor" class="w-full h-2/6"></div>
+      <div id="preview" v-html="parsedHTML"></div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import EditorJS from '@editorjs/editorjs';
-const EditorHtmlParser = require("editorjs-html")()
+import Vue from "vue";
+import EditorJS from "@editorjs/editorjs";
+const EditorHtmlParser = require("editorjs-html")();
+
 declare global {
-  interface Window { editor: any; }
-}
-
-// import Image from '@editorjs/image'
-
-const requiredTools = {
-  image: {
-    class: Image,
-    config: {
-      field: "files.image",
-      additionalRequestData: {
-        data: JSON.stringify({})
-      },
-      additionalRequestHeaders: {
-        "Authorization": `Bearer `
-      },
-      endpoints: {
-        byUrl: `/api/image/byUrl`,
-      },
-      uploader: {
-        async uploadByFile(file: any) {
-          const formData = new FormData();
-          formData.append("data", JSON.stringify({}));
-          formData.append("files.image", file);
-
-          // const {data} = await axios.post(`/api/${PluginId}/image/byFile`, formData, {
-          //   headers: {
-          //     "Authorization": `Bearer ${auth.getToken()}`
-          //   }
-          // });
-
-          // return data
-        },
-      }
-    }
+  interface Window {
+    editor: any;
   }
 }
 
-// import EditorJS from '@editorjs/editorjs';
+import Header from "@editorjs/header";
+import Image from "@editorjs/image";
+import Quote from "@editorjs/quote";
+import Paragraph from "@editorjs/paragraph";
+import CodeTool from "@editorjs/code";
+import List from "@editorjs/list";
+import Delimiter from "@editorjs/delimiter";
+import Table from "@editorjs/table";
+import Warning from "@editorjs/warning";
+import Checklist from "@editorjs/checklist";
+import LinkTool from "@editorjs/link";
+import RawTool from "@editorjs/raw";
+import Embed from "@editorjs/embed";
+import InlineCode from "@editorjs/inline-code";
+import Marker from "@editorjs/marker";
+import Mention from '@groupher/editor-mention';
+import AlignmentBlockTune from "editorjs-text-alignment-blocktune";
+import FontFamily from "editorjs-inline-font-family-tool";
+import FontSize from "editorjs-inline-font-size-tool";
+// import SlashCommand from "~/modules/editor-slash-command";
 
-// /**
-//  * Block Tools for the Editor
-//  */
-// import Header from '@editorjs/header';
-// import Image from '@editorjs/image';
-// import CodeTool from '@editorjs/code';
-// import List from '@editorjs/list';
-// import Delimiter from '@editorjs/delimiter';
-// import Table from '@editorjs/table';
-// import Warning from '@editorjs/warning';
-// import Checklist from '@editorjs/checklist';
-// import LinkTool from '@editorjs/link';
-// import RawTool from '@editorjs/raw';
-// import Embed from '@editorjs/embed';
-
-// /**
-//  * Inline Tools for the Editor
-//  */
-// import InlineCode from '@editorjs/inline-code';
-// import Marker from '@editorjs/marker';
-
-// /**
-//  * Class for working with Editor.js
-//  */
-// export default class Editor {
-//   /**
-//    * Creates Editor instance
-//    *
-//    * @param {object} editorConfig - configuration object for Editor.js
-//    * @param {object} data.blocks - data to start with
-//    * @param {object} options
-//    * @param {string} options.headerPlaceholder - placeholder for Header tool
-//    */
-//   constructor(editorConfig = {}, options = {}) {
-//     const defaultConfig = {
-//       tools: {
-//         header: {
-//           class: Header,
-//           inlineToolbar: ['marker', 'inlineCode'],
-//           config: {
-//             placeholder: options.headerPlaceholder || '',
-//           },
-//         },
-
-//         image: {
-//           class: Image,
-//           inlineToolbar: true,
-//           config: {
-//             types: 'image/*, video/mp4',
-//             endpoints: {
-//               byFile: '/api/transport/image',
-//               byUrl: '/api/transport/fetch',
-//             },
-//           },
-//         },
-
-//         linkTool: {
-//           class: LinkTool,
-//           config: {
-//             endpoint: '/api/fetchUrl',
-//           },
-//         },
-
-//         code: {
-//           class: CodeTool,
-//           shortcut: 'CMD+SHIFT+D',
-//         },
-
-//         list: {
-//           class: List,
-//           inlineToolbar: true,
-//         },
-
-//         delimiter: Delimiter,
-
-//         table: {
-//           class: Table,
-//           inlineToolbar: true,
-//         },
-
-//         warning: {
-//           class: Warning,
-//           inlineToolbar: true,
-//         },
-
-//         checklist: {
-//           class: Checklist,
-//           inlineToolbar: true,
-//         },
-
-//         /**
-//          * Inline Tools
-//          */
-//         inlineCode: {
-//           class: InlineCode,
-//           shortcut: 'CMD+SHIFT+C',
-//         },
-
-//         marker: {
-//           class: Marker,
-//           shortcut: 'CMD+SHIFT+M',
-//         },
-
-//         raw: RawTool,
-
-//         embed: Embed,
-//       },
-//       data: {
-//         blocks: [
-//           {
-//             type: 'header',
-//             data: {
-//               text: '',
-//               level: 2,
-//             },
-//           },
-//         ],
-//       },
-//     };
-
-//     this.editor = new EditorJS(Object.assign(defaultConfig, editorConfig));
-//   }
-
-//   /**
-//    * Return Editor data
-//    *
-//    * @returns {Promise.<{}>}
-//    */
-//   save() {
-//     return this.editor.saver.save();
-//   }
-// }
-
-// const loadEditor = () => Promise<Editor>
-// const { default: Editor } = await import(/* webpackChunkName: "editor" */ './../classes/editor');
-
+// import { MDParser, MDImporter } from "~/modules/editorjs-markdown-parser";
 
 export default Vue.extend({
-  name: 'Editor',
+  name: "Editor",
   head() {
-      return {
-        // script: [
-        //   {
-        //     src: 'https://cdn.jsdelivr.net/npm/editorjs-html@3.4.0/build/edjsHTML.browser.js'
-        //   }
-        // ],
-      }
+    return {
+      // script: [
+      //   {
+      //     src: 'https://cdn.jsdelivr.net/npm/editorjs-html@3.4.0/build/edjsHTML.browser.js'
+      //   }
+      // ],
+    };
   },
   data() {
     return {
-     value: null,
-     editor: {} as any,
-     parsedHTML: ''
+      value: null,
+      editor: {} as any,
+      parsedHTML: "",
     };
   },
   methods: {
-    save: function() {
-      this.editor.save().then((savedData: any) => {
-        console.log(savedData);
-        this.value = savedData;
-        this.parsedHTML = EditorHtmlParser.parse(savedData).join('')
-        console.log(this.parsedHTML)
-      });
+    async preview() {
+      await this.save();
+      this.parsedHTML = await EditorHtmlParser.parse(this.value).join("");
     },
-    myEditor: function() {
+    async save() {
+      const saved: any = await this.editor.saver.save();
+      this.value = saved;
+    },
+    myEditor() {
       if (Object.keys(this.editor).length) {
-        return
+        return;
       }
       this.editor = new EditorJS({
         holder: "editor",
         autofocus: true,
         initialBlock: "paragraph",
-        placeholder: 'Let`s write an awesome story!',
+        placeholder: "Let`s write an awesome story!",
         tools: {
-          // header: {
-          //   class: Header,
-          //   inlineToolbar : true
-          // },
-          // ...
+          header: {
+            class: Header,
+            inlineToolbar: ["marker", "inlineCode"],
+            config: {
+              placeholder: "",
+            },
+          },
+
+          image: {
+            class: Image,
+            inlineToolbar: true,
+            config: {
+              types: "image/*, video/mp4",
+              endpoints: {
+                byFile: "/api/transport/image",
+                byUrl: "/api/transport/fetch",
+              },
+            },
+          },
+          paragraph: {
+            class: Paragraph,
+          },
+          alignmentSetting: {
+            class: AlignmentBlockTune,
+            config: {
+              default: "right",
+              blocks: {
+                header: "center",
+                list: "right",
+              },
+            },
+          },
+          linkTool: {
+            class: LinkTool,
+            config: {
+              endpoint: "/api/fetchUrl",
+            },
+          },
+          quote: {
+            class: Quote,
+            inlineToolbar: true,
+            shortcut: "CMD+SHIFT+O",
+            config: {
+              quotePlaceholder: "Цитата",
+              captionPlaceholder: "Автор",
+            },
+          },
+          code: {
+            class: CodeTool,
+            shortcut: "CMD+SHIFT+D",
+          },
+
+          list: {
+            class: List,
+            inlineToolbar: true,
+          },
+
+          delimiter: Delimiter,
+          // mention: Mention,
+          // slashCommand: SlashCommand,
+
+          table: {
+            class: Table,
+            inlineToolbar: true,
+            config: {
+              rows: 2,
+              cols: 3,
+            },
+          },
+
+          warning: {
+            class: Warning,
+            inlineToolbar: true,
+          },
+
+          checklist: {
+            class: Checklist,
+            inlineToolbar: true,
+          },
+          fontFamily: FontFamily,
+          fontSize: FontSize,
+          /**
+           * Inline Tools
+           */
+          inlineCode: {
+            class: InlineCode,
+            shortcut: "CMD+SHIFT+C",
+          },
+
+          marker: {
+            class: Marker,
+            shortcut: "CMD+SHIFT+M",
+          },
+
+          raw: RawTool,
+          // markdownParser: MDParser,
+          // markdownImporter: MDImporter,
+          embed: {
+            class: Embed,
+            config: {
+              services: {
+                youtube: true,
+                coub: true,
+              },
+            },
+          },
         },
         // Previously saved data that should be rendered
         data: {} as any,
-        
+
         onReady: () => {
-          console.log('Editor.js is ready to work!')
+          console.log("Editor.js is ready to work!");
         },
         onChange: (api, event) => {
-          console.log('Now I know that Editor\'s content changed!', event)
+          console.log("Now I know that Editor's content changed!", event);
         },
         i18n: {
           messages: {
             ui: {
               // Translations of internal UI components of the editor.js core
-              },
-              toolNames: {
-                // Section for translation Tool Names: both block and inline tools
-              },
-              tools: {
-                // Section for passing translations to the external tools classes
-                // The first-level keys of this object should be equal of keys ot the 'tools' property of EditorConfig
-              },
-              blockTunes: {
-                // Section allows to translate Block Tunes
-              },
             },
-          }
+            toolNames: {
+              // Section for translation Tool Names: both block and inline tools
+            },
+            tools: {
+              // Section for passing translations to the external tools classes
+              // The first-level keys of this object should be equal of keys ot the 'tools' property of EditorConfig
+            },
+            blockTunes: {
+              // Section allows to translate Block Tunes
+            },
+          },
+        },
       });
-    }
+    },
   },
-  mounted: function() {
-    this.myEditor()
+  mounted: function () {
+    this.myEditor();
   },
-})
+});
 </script>
 
-<style lang="css" scoped >
-.editorx_body {
-  /* width: 62%;
-  margin-left: 15%; */
-  width: 60%;
-  margin-left: 20%;
-  border: 2px solid #f1f3f5;
-  box-sizing: border-box;
+<style lang="css">
+.ce-block__content,
+.ce-toolbar__content {
+  max-width: 100%;
 }
-.ce-block--focused {
-  background: linear-gradient(
-    90deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(9, 9, 121, 0.5438550420168067) 35%,
-    rgba(0, 212, 255, 1) 100%
-  );
+.cdx-block {
+  max-width: 100% !important;
 }
 </style>
