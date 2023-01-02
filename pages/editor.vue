@@ -56,7 +56,7 @@
 <script lang="ts">
 import Vue from "vue";
 import EditorJS from "@editorjs/editorjs";
-const EditorHtmlParser = require("editorjs-html")();
+import editorjsHTML from 'editorjs-html'
 
 declare global {
   interface Window {
@@ -79,13 +79,14 @@ import RawTool from "@editorjs/raw";
 import Embed from "@editorjs/embed";
 import InlineCode from "@editorjs/inline-code";
 import Marker from "@editorjs/marker";
-import Mention from '@groupher/editor-mention';
+import Undo from "editorjs-undo";
+import DragDrop from "editorjs-drag-drop";
+import InlineImage from "editorjs-inline-image";
 import AlignmentBlockTune from "editorjs-text-alignment-blocktune";
 import FontFamily from "editorjs-inline-font-family-tool";
 import FontSize from "editorjs-inline-font-size-tool";
-// import SlashCommand from "~/modules/editor-slash-command";
 
-// import { MDParser, MDImporter } from "~/modules/editorjs-markdown-parser";
+
 
 export default Vue.extend({
   name: "Editor",
@@ -102,19 +103,20 @@ export default Vue.extend({
     return {
       value: null,
       editor: {} as any,
+      htmlParser: {} as any,
       parsedHTML: "",
     };
   },
   methods: {
     async preview() {
       await this.save();
-      this.parsedHTML = await EditorHtmlParser.parse(this.value).join("");
+      this.parsedHTML = await this.htmlParser.parse(this.value).join("");
     },
     async save() {
       const saved: any = await this.editor.saver.save();
       this.value = saved;
     },
-    myEditor() {
+    loadEditor() {
       if (Object.keys(this.editor).length) {
         return;
       }
@@ -128,7 +130,9 @@ export default Vue.extend({
             class: Header,
             inlineToolbar: ["marker", "inlineCode"],
             config: {
-              placeholder: "",
+              levels: [1, 2, 3, 4, 5, 6],
+              defaultLevel: 3,
+              placeholder: "Heading",
             },
           },
 
@@ -140,6 +144,19 @@ export default Vue.extend({
               endpoints: {
                 byFile: "/api/transport/image",
                 byUrl: "/api/transport/fetch",
+              },
+            },
+          },
+          inlineImage: {
+            class: InlineImage,
+            inlineToolbar: true,
+            config: {
+              embed: {
+                display: true,
+              },
+              unsplash: {
+                appName: "Image Favorite",
+                clientId: "j8mrnYcLrLL9gBUrHqgcjAjpC1chVprJ6vZCLuJP5LM",
               },
             },
           },
@@ -167,8 +184,8 @@ export default Vue.extend({
             inlineToolbar: true,
             shortcut: "CMD+SHIFT+O",
             config: {
-              quotePlaceholder: "Цитата",
-              captionPlaceholder: "Автор",
+              quotePlaceholder: "Quote",
+              captionPlaceholder: "Caption",
             },
           },
           code: {
@@ -182,8 +199,6 @@ export default Vue.extend({
           },
 
           delimiter: Delimiter,
-          // mention: Mention,
-          // slashCommand: SlashCommand,
 
           table: {
             class: Table,
@@ -219,8 +234,7 @@ export default Vue.extend({
           },
 
           raw: RawTool,
-          // markdownParser: MDParser,
-          // markdownImporter: MDImporter,
+       
           embed: {
             class: Embed,
             config: {
@@ -235,10 +249,11 @@ export default Vue.extend({
         data: {} as any,
 
         onReady: () => {
-          console.log("Editor.js is ready to work!");
+          new Undo({ editor: this.editor });
+          new DragDrop(this.editor);
         },
         onChange: (api, event) => {
-          console.log("Now I know that Editor's content changed!", event);
+          // console.log("content changed");
         },
         i18n: {
           messages: {
@@ -259,9 +274,20 @@ export default Vue.extend({
         },
       });
     },
+    inlineImageParser({ data }: any){
+      const src = data.file && data.file.url ? data.file.url : data.url
+      return `<img src="${src}" alt="${data.caption}" />`;
+    },
+    loadHtmlParser() {
+      const plugins: any = {
+        inlineImage: this.inlineImageParser
+      }
+      this.htmlParser = editorjsHTML(plugins);
+    }
   },
-  mounted: function () {
-    this.myEditor();
+  mounted() {
+    this.loadEditor();
+    this.loadHtmlParser();
   },
 });
 </script>
